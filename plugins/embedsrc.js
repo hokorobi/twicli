@@ -23,6 +23,7 @@
 		{search: /^http:\/\/p\.twipple\.jp\/([\w-]+)$/, replace: "https://p.twipple.jp/show/large/$1", type: "iframe"},
 		{search: /^https?:\/\/(?:www\.)?instagram\.com\/p\/([\w-]+)\/?(?:\?.+)?$/, replace: "https://instagram.com/p/$1/media/?size=m", type: "iframe"},
 		{search: /^https?:\/\/pimg\.togetter\.com\//, replace: "$&", type: "iframe"},
+		{search: /^https?:\/\/movapic\.com\/pic\/([\w]+)$/, replace: "https://image.movapic.com/pic/m_$1.jpeg", type: "iframe"},
 		{search: /^https?:\/\/vimeo\.com\/(?:m\/)?(\d+)$/, replace: "https://player.vimeo.com/video/$1", type: "iframe"}
 	];
 
