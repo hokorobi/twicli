@@ -146,6 +146,9 @@ registerPlugin(thumbnail_plugin = {
 						addThumbnail(elem, img.medium, url);
 				});
 		}
+		else if (url.match(/^https?:\/\/pimg\.togetter\.com\//)) {
+			addThumbnail(elem, url, url);
+		}
 	},
 	changeTheme: function(theme) {
 		thumbnailModeSet(theme.thumbnail_mode || 'top');
