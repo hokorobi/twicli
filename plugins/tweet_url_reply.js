@@ -31,7 +31,7 @@ function dispImageFromLink(url, e, type) {
 }
 
 (function() {
-  var re = /^https?:\/\/(?:mobile\.)?twitter\.com\/(?:#!\/|#%21\/)?(\w+)\/status(?:es)?\/(\d+)/;
+  var re = /^https?:\/\/(?:mobile\.)?twitter\.com\/(?:#!\/|#%21\/)?(?:\w+)\/status(?:es)?\/(\d+)/;
 
   function tweetUrlReply(elem) {
     Array.prototype.forEach.call(elem.querySelectorAll('.status > a.link'), function(link) {
