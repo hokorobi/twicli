@@ -152,6 +152,9 @@ registerPlugin(thumbnail_plugin = {
 		else if (url.match(/^http:\/\/\w+\.c\.yimg\.jp\//)) {
 			addThumbnail(elem, url, url);
 		}
+		else if (url.match(/(\.png|\.jpg|\.jpeg|\.gif)$/)) {
+			addThumbnail(elem, url, url);
+		}
 		else if (url.match(/^https?:\/\/pimg\.togetter\.com\//)) {
 			addThumbnail(elem, url, url);
 		}
