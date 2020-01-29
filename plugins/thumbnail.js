@@ -149,6 +149,9 @@ registerPlugin(thumbnail_plugin = {
 		else if (url.match(/^https?:\/\/miil\.me\/p\//)) {
 			addThumbnail(elem, url + '.jpeg?size=240', url);
 		}
+		else if (url.match(/^http:\/\/\w+\.c\.yimg\.jp\//)) {
+			addThumbnail(elem, url, url);
+		}
 		else if (url.match(/^https?:\/\/pimg\.togetter\.com\//)) {
 			addThumbnail(elem, url, url);
 		}
