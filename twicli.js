@@ -1150,7 +1150,7 @@ function makeHTML(tw, no_name, pid, userdesc, noctl) {
 		/*ダイレクトメッセージの方向*/ (t.d_dir == 1 ? '<span class="dir">→</span> ' : t.d_dir == 2 ? '<span class="dir">←</span> ' : '') +
 		//本文 (https〜をリンクに置換 + @を本家リンク+JavaScriptに置換)
 		" <span id=\"text-" + eid + "\" class=\"status" + (tw.deleted ? " deleted" : "") + "\">" +
-		ttext.replace(regexp_links, function(_,u,x,h,s){
+		(userdesc ? getDescripionHTML(tw.user) : ttext.replace(regexp_links, function(_,u,x,h,s){
 				if (!u && !h) {
 					if (expanded_urls[_]) {
 						if (t.quoted_status && t.quoted_status.user && t.quoted_status_id_str &&
@@ -1161,15 +1161,10 @@ function makeHTML(tw, no_name, pid, userdesc, noctl) {
 						t.text_replaced = (t.text_replaced || text(t)).replace(_, expanded_urls[_]);
 						_ = expanded_urls[_];
 					}
-					return "<a class=\"link\" target=\"_blank\" href=\""+_.replace(/\"/g, '%22')+"\" onclick=\"return link(this);\">"+_.replace(/&/g, '&amp;')+"</a>";
+					return "<a class=\"link\" target=\"_blank\" href=\""+_.replace(/\"/g, '%22')+"\" onclick=\"return link(this);\">"+removeScheme(_).replace(/&/g, '&amp;')+"</a>";
 				}
-				if (h == "#" || h == "＃") {
-					if (s.match(/^\d+$/)) return _;
-					return x+"<a target=\"_blank\" class=\"hashtag\" title=\"#"+s+"\" href=\"https://twitter.com/search?q="+encodeURIComponent("#"+s)+"\">"+h+s+"</a>";
-				}
-				if (u.indexOf('/') > 0) return "<a target=\"_blank\" href=\""+twitterURL+u+"\" onclick=\"return link(this);\">"+_+"</a>";
-				return "<a href=\""+twitterURL+u+"\"  class=\"mention\" onClick=\"switchUser('"+u+"'); return false;\" >"+_+"</a>";
-			}).replace(/\r?\n|\r/g, "<br>") +
+				return replaceUserAndHashtagWithLink(_, u, x, h, s);
+			}).replace(/\r?\n|\r/g, "<br>")) +
 		(noctl ? '<a class="button inrep overlay" href="#" onclick="return overlayQuoted(this)"><img src="images/jump.png"></a>' : '') +
 		'</span>' +
 		(noctl ? '' :
@@ -1197,15 +1192,59 @@ function makeHTML(tw, no_name, pid, userdesc, noctl) {
 		'&nbsp;&nbsp;&nbsp;<a class="button popup" href="#" onClick="popup_menu(\'' + un + "','" + id2 + '\', this); return false;"><small><small>▼</small></small></a>' +
 		'</span>');
 }
+function removeScheme(url) {
+	return url.replace(/^https?:\/\//, '');
+}
+function replaceUserAndHashtagWithLink(_, u, x, h, s) {
+	if (h === "#" || h === "＃") {
+		if (s.match(/^\d+$/)) return _;
+		return (x + '<a target="_blank" class="hashtag" title="#' + s + '" href="' + twitterURL + 'search?q='
+			+ encodeURIComponent('#' + s) + '">' + h + s + '</a>');
+	} else if (u) {
+		if (u.indexOf('/') > 0) return _;
+		return '<a href="' + twitterURL + u + '"  class="mention" onClick="switchUser(\'' + u + '\'); return false;" >' + _ + '</a>';
+	}
+	return _;
+}
+function getDescripionHTML(user) {
+	if (!user.description) return '<br>';
+	var expanded_urls = {};
+	if (user.entities && user.entities.description && Array.isArray(user.entities.description.urls)) {
+		user.entities.description.urls.forEach(function(u) {
+			if (u.url && u.expanded_url) {
+				expanded_urls[u.url] = {
+					display_url: u.display_url,
+					expanded_url: u.expanded_url
+				};
+			}
+		});
+	}
+	return user.description.replace(regexp_links, function(_, u, x, h, s) {
+		if (h === "#" || h === "＃" || u) {
+			return replaceUserAndHashtagWithLink(_, u, x, h, s);
+		}
+		var url = expanded_urls[_] || { display_url: _, expanded_url: _ };
+		return ('<a class="link" target="_blank" href="' + url.expanded_url.replace(/"/g, '%22') + '" onclick="return link(this);">'
+			+ url.display_url.replace(/&/g, '&amp;') + '</a>');
+	}).replace(/\r?\n|\r/g, "<br>");
+}
 // ユーザ情報のHTML表現を生成
 function makeUserInfoHTML(user) {
+	function getWebSiteHTML(user) {
+		if (!user.url) return '';
+		var url = {};
+		if (user.entities && user.entities.url && Array.isArray(user.entities.url.urls)) {
+			var cand = user.entities.url.urls.filter(function(u) { return u.url === user.url; }).shift();
+			if (cand) url = cand;
+		}
+		return '<a target="_blank" href="' + (url.expanded_url || user.url).replace(/"/g, '%22') + '" onclick="return link(this);">' + (url.display_url || user.url).replace(/&/g, '&amp;') + '</a>';
+	}
 	return '<a class="uicona" target="twitter" href="' + user.profile_image_url_https.replace('_normal', '') +'"><img class="uicon2" src="' + user.profile_image_url_https.replace('normal.','reasonably_small.') + '" onerror="if(this.src!=\''+user.profile_image_url_https+'\')this.src=\''+user.profile_image_url_https+'\'"></a><div id="profile"><div>' +
 			(user.verified ? '<img class="verified" alt="verified" src="images/verified.png">' : '') +
 			(user.protected ? '<img class="lock" alt="lock" src="images/icon_lock.png">' : '') +
 			'<b>@' + user.screen_name + '</b> / <b>' + user.name + '</b></div>' +
-			'<div class="udesc">' + (user.description ? user.description.replace(/@(\w+)/g, '<a href="'+twitterURL+'$1" onclick="switchUser(\'$1\');return false;">@$1</a>') : '<br>') + '</div>' +
-			'<div class="uloc">' + (user.location ? user.location + (user.url?'・':'') : '') +
-			(user.url ? '<a target="_blank" href="' + user.url + '" onclick="return link(this);">' + user.url + '</a>' : '') + '</div>' +
+			'<div class="udesc">' + getDescripionHTML(user) + '</div>' +
+			'<div class="uloc">' + [user.location, getWebSiteHTML(user)].filter(function(u) { return !!u; }).join('・') + '</div>' +
 			'<b><a href="' + twitterURL + user.screen_name + '/following" onclick="switchFollowing();return false;">' + user.friends_count + '<small>'+_('following')+'</small></a> / ' +
 						'<a href="' + twitterURL + user.screen_name + '/followers" onclick="switchFollower();return false;">' + user.followers_count + '<small>'+_('followers')+'</small></a>' +
 			' / <a href="' + twitterURL + user.screen_name + '" onclick="switchStatus();return false;">' + user.statuses_count + '<small>'+_('tweets')+'</small></a> / ' +
