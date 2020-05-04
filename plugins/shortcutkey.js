@@ -266,7 +266,7 @@ var shortcutkey_plugin = {
 									target2.onclick();
 									break;
 								}
-								if (target2.innerHTML.substr(0,4) == 'http') {
+								if (target2.className.match(/\blink\b/)) {
 									if (link(target2)) (function(url){
 										var a = document.createElement("a");
 										a.href = url;
