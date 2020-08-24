@@ -30,30 +30,30 @@ registerPlugin(thumbnail_plugin = {
 		}.bind(this));
 	},
 	replaceUrl: function(elem, link, url) {
-		var flickr_id;
+		var flickr_id, id, _url;
 		if (link.thumbnailed && link.thumbnailed == url) return;
 		link.thumbnailed = url;
 		if (url.indexOf(twitterURL) == 0 || url.indexOf("javascript:") == 0)
 			return; // skip @... or #...
 		if (url.match(/^http:\/\/twitpic\.com\/(\w+)/)) {
-			var id = RegExp.$1;
+			id = RegExp.$1;
 			addThumbnail(elem, 'http://twitpic.com/show/thumb/' + id, url);
 		}
 		else if (url.match(/^http:\/\/movapic\.com\/pic\/(\w+)$/)) {
-			var id = RegExp.$1;
+			id = RegExp.$1;
 			addThumbnail(elem, 'http://image.movapic.com/pic/t_' + id + '.jpeg', url);
 		}
-		else if (url.match(/^http:\/\/f\.hatena\.ne\.jp\/([\w\-]+)\/(\d{8})(\w+)$/)) {
+		else if (url.match(/^http:\/\/f\.hatena\.ne\.jp\/([\w-]+)\/(\d{8})(\w+)$/)) {
 			var user = RegExp.$1;
 			var date = RegExp.$2;
-			var id = RegExp.$3;
+			id = RegExp.$3;
 			addThumbnail(elem,
 					'http://f.hatena.ne.jp/images/fotolife/' + user[0] + '/' + user +
 					'/' + date + '/' + date + id + '_120.jpg',
 					url);
 		}
-		else if (url.match(/^(http:\/\/[\w\-]+\.tumblr\.com\/)post\/(\d+)/)) {
-			var _url = url;
+		else if (url.match(/^(http:\/\/[\w-]+\.tumblr\.com\/)post\/(\d+)/)) {
+			_url = url;
 			xds.load(RegExp.$1+'api/read/json?id='+RegExp.$2,
 					function(x) {
 						var p = x.posts[0]['photo-url-75'];
@@ -62,7 +62,7 @@ registerPlugin(thumbnail_plugin = {
 					});
 		}
 		else if (flickr_id = flickrPhotoID(url)) {
-			var _url = url;
+			_url = url;
 			xds.load('https://www.flickr.com/services/rest?method=flickr.photos.getInfo'+
 					'&format=json&api_key=9bc57a7248847fd9a80982989e80cfd0&photo_id='+flickr_id,
 					function(x) {
@@ -79,20 +79,20 @@ registerPlugin(thumbnail_plugin = {
 		else if (url.match(/^http:\/\/ow.ly\/i\/(\w+)/)) {
 			addThumbnail(elem, 'http://static.ow.ly/photos/thumb/'+RegExp.$1+".jpg", url);
 		}
-		else if (url.match(/^https?:\/\/(?:(?:www\.|m\.|)youtube\.com\/watch\?.*v=|youtu\.be\/)([\w\-]+)/)) {
-			var id = RegExp.$1;
+		else if (url.match(/^https?:\/\/(?:(?:www\.|m\.|)youtube\.com\/watch\?.*v=|youtu\.be\/)([\w-]+)/)) {
+			id = RegExp.$1;
 			addThumbnail(elem, 'https://i.ytimg.com/vi/' + id + '/default.jpg', url);
 		}
 		else if (url.match(/^http:\/\/(?:www\.nicovideo\.jp\/watch|nico\.ms|seiga\.nicovideo\.jp\/seiga)\/([a-z][a-z])(\d+)$/)) {
 			if (RegExp.$1 == "lv" || RegExp.$1 == "nw") return; // live/news thumbnail is not supported
-			var id = RegExp.$2;
+			id = RegExp.$2;
 			var host = parseInt(id)%4 + 1;
 			if (RegExp.$1 == "im")
 				addThumbnail(elem, 'http://lohas.nicoseiga.jp/thumb/' + id, url);
 			else
 				addThumbnail(elem, 'http://tn-skr' + host + '.smilevideo.jp/smile?i=' + id, url);
 		}
-		else if (url.match(/^(https?:\/\/(?:www\.)?(?:instagr\.am|instagram\.com))(?:\/[\w]{2,30})?(\/p\/[\w\-]+)\/?(?:\??|$)/)) {
+		else if (url.match(/^(https?:\/\/(?:www\.)?(?:instagr\.am|instagram\.com))(?:\/[\w]{2,30})?(\/p\/[\w-]+)\/?(?:\??|$)/)) {
 			addThumbnail(elem, RegExp.$1 + RegExp.$2 +'/media/?size=t', url);
 		}
 		else if (url.match(/^http:\/\/photozou\.jp\/photo\/show\/\d+\/(\d+)/)) {
@@ -117,28 +117,18 @@ registerPlugin(thumbnail_plugin = {
 					addThumbnail(elem, x[0].thumbnail_medium, url, x[0].title);
 				});
 		}
-		else if (url.match(/^(http:\/\/www\.pixiv\.net\/member_illust\.php\?(?:.*&)*illust_id=\d+.*)/)) {
-			xds.load("//thumbnail-url.appspot.com/url?url=" + encodeURIComponent(RegExp.$1),
-				function(x) {
-					if (x && x.thumbnail)
-						addThumbnail(elem, x.thumbnail, url);
-				});
+		else if (url.match(/^https?:\/\/(?:i\.)?gyazo\.com\/([0-9a-f]+)(?:\.png|\.jpg)?/)) {
+			var gyazo_prefix = 'https://i.gyazo.com/thumb/400/';
+			addThumbnail(elem, [gyazo_prefix + RegExp.$1 + '-png.jpg', gyazo_prefix + RegExp.$1 + '-jpg.jpg'], url);
 		}
-		else if (url.match(/^(https?:\/\/(?:i\.)?gyazo\.com\/[0-9a-f]+)(?:\.png)?/)) {
-			xds.load("//thumbnail-url.appspot.com/url?url=" + encodeURIComponent(RegExp.$1),
-				function(x) {
-					if (x && x.thumbnail)
-					addThumbnail(elem, x.thumbnail, url);
-			});
-		}
-		else if (url.match(/^(https?:\/\/(?:www\.)?amazon\.(?:co\.jp|jp|com)\/.*(?:d|dp|product|ASIN)[\/%].+)/)) {
-			xds.load("//thumbnail-url.appspot.com/url?url=" + encodeURIComponent(RegExp.$1),
+		else if (url.match(/^(https?:\/\/(?:www\.)?amazon\.(?:co\.jp|jp|com)\/.*(?:d|dp|product|ASIN)[/%][^?]+)\??/)) {
+			xds.load("//thumbnail-url-t2yaxfegmq-uw.a.run.app/url?url=" + encodeURIComponent(RegExp.$1),
 				function(x) {
 					if (x && x.thumbnail)
 						addThumbnail(elem, x.thumbnail, x.link || url, x.title);
 				});
 		}
-		else if (url.match(/^http:\/\/(?:www\.|m\.)?ustream\.tv\/(channel|recorded)\/(?:id\/)?([\w\-]+)/)) {
+		else if (url.match(/^http:\/\/(?:www\.|m\.)?ustream\.tv\/(channel|recorded)\/(?:id\/)?([\w-]+)/)) {
 		    xds.load("http://api.ustream.tv/json/" + (RegExp.$1=='recorded'?'video':RegExp.$1) + "/" +
 				RegExp.$2 + "/getValueOf/imageUrl?key=8149DBC1DF1083B3F4D8F7F0A1978F57",
 				function(img) {
@@ -162,7 +152,7 @@ registerPlugin(thumbnail_plugin = {
 	changeTheme: function(theme) {
 		thumbnailModeSet(theme.thumbnail_mode || 'top');
 	},
-	miscTab: function(ele) {
+	miscTab: function() {
 		var e = document.createElement("div");
 	e.innerHTML = '<a href="javascript:var s = $(\'thumbnail_pref\').style; s.display = s.display==\'block\'?\'none\':\'block\';void(0)"><b>▼'+_('Thumbnail')+'</b></a>' +
 		'<form id="thumbnail_pref" style="display:none" onSubmit="return false;">' +
@@ -188,7 +178,7 @@ function thumbnailModeSet(mode) {
 	for (var i = eles.length - 1; i >= 0; i--)
 	eles[i].parentNode.removeChild(eles[i]);
 	for (var p = 0; p < 2; p++) {
-		for (var i = 0; i < $(['tw','re'][p]).childNodes.length; i++) {
+		for (i = 0; i < $(['tw','re'][p]).childNodes.length; i++) {
 			var tp = $(['tw','re'][p]).childNodes[i];
 			for (var j = 0; j < tp.childNodes.length; j++) {
 				var td = tp.childNodes[j];
@@ -221,7 +211,12 @@ var thumbnail_twitter_photo_link = readCookie('thumbnail_twitter_photo_link') ||
 
 function addThumbnail(elem, src, url, title) {
 	var thm = document.createElement('img');
-	thm.src = src;
+	if (typeof(src) == 'string')
+	  thm.src = src;
+	else {
+		thm.src = src[0];
+		thm.onerror = function() { thm.onerror = null; thm.src = src[1]; };
+	}
 	thm.className = 'thumbnail-image';
 	thm.ontouchstart = function(){ thm.style.maxWidth = '200px'; };
 	thm.ontouchend   = function(){ thm.style.maxWidth = '30px'; };

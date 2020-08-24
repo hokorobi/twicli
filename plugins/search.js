@@ -115,10 +115,10 @@ function twsReplaceLinkWithHandler(ele) {
 	}
 }
 
+var tws_blocked_users = {};
+var tws_muted_users = {};
 registerPlugin({
 	auth: function() {
-		tws_blocked_users = {};
-		tws_muted_users = {};
 		xds.load_default(twitterAPI + 'blocks/list.json?skip_status=1', function(result) {
 			for (var i = 0; i < result.users.length; i++)
 				tws_blocked_users[result.users[i].id_str] = result.users[i];
@@ -128,7 +128,7 @@ registerPlugin({
 				tws_muted_users[result.users[i].id_str] = result.users[i];
 		});
 	},
-	switchTo: function(m) {
+	switchTo: function() {
 		if (!tws_update_timer) return;
 		clearInterval(tws_update_timer);
 		tws_update_timer = null;

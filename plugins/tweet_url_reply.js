@@ -39,7 +39,7 @@ function dispImageFromLink(url, e, type) {
     });
   }
 
-  function urlReplaced(elem, link, lng, sht) {
+  function urlReplaced(elem, link) {
     insertInReplyTo(link);
   }
 
@@ -57,7 +57,7 @@ function dispImageFromLink(url, e, type) {
     if (tw.id_str === id_str && (a.href.indexOf('/photo/1') >= 0 || a.href.indexOf('/video/1') >= 0) &&
         entities.media && entities.media[0]) {
       var media = entities.media;
-      var script = 'dispImageFromLink([' +
+      script = 'dispImageFromLink([' +
         Array.prototype.map.call(media, function(x){
           return x.video_info ?
             Array.prototype.map.call(x.video_info.variants, function(y){return '[\'' + y.content_type + '\',\'' + y.url + '\']'}) :

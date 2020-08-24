@@ -15,6 +15,8 @@ emojiStyle.type = 'text/css';
 emojiStyle.innerHTML = 'img.emoji { margin: 0 0.3em; height: 1em; vertical-align: text-bottom; }';
 document.getElementsByTagName('head')[0].appendChild(emojiStyle);
 
+/* global twemoji */
+
 function tweReplaceEmoji(el) {
 	// IOC: [ ISO-3166-1 Alpha-3, ISO-3166-1 Alpha-2, Unicode, ...], // Country Name
 	var countryFlags = {
@@ -463,7 +465,6 @@ function tweReplaceEmoji(el) {
 		'ミュウツー': 'WBPikachu_Mewtwo',
 		'MEWTWO': 'WBPikachu_Mewtwo',
 		'MEWTU': 'WBPikachu_Mewtwo',
-		'MEWTWO': 'WBPikachu_Mewtwo',
 		'뮤츠': 'WBPikachu_Mewtwo',
 		'超梦': 'WBPikachu_Mewtwo',
 		'超夢': 'WBPikachu_Mewtwo',
@@ -523,9 +524,10 @@ function tweReplaceEmoji(el) {
 		'令和元年': 'Reiwa_NewEra_2019',
 		'ハロー令和': 'Reiwa_NewEra_2019',
 		// [6月16日（日）「 #父の日 」にTwitterで #お父さんありがとう を伝えよう](https://blog.twitter.com/ja_jp/topics/events/2019/fathersday2019.html)
-		'父の日': 'FathersDay_2019',
-		'FATHERSDAY': 'FathersDay_2019',
-		'お父さんありがとう': 'FathersDay_2019',
+		'父の日': 'Fathers_Day_2020',
+		'FATHERSDAY': 'Fathers_Day_2020',
+		'お父さんありがとう': 'Fathers_Day_2020',
+		'HAPPYFATHERSDAY': 'Fathers_Day_2020',
 		// ---- 新海誠監督映画 ----
 		'君の名は': 'YourNameMovie_2019',
 		'YOURNAME': 'YourNameMovie_2019',
@@ -677,10 +679,13 @@ function tweReplaceEmoji(el) {
 		'G20閣僚会合': 'G20Osaka_2019',
 		// [#参院選2019 Twitter上でニッポンの政治を知ろう、語ろう](https://blog.twitter.com/ja_jp/topics/company/2019/election_2019.html)
 		'選挙': 'GoVoteUpperHouseElection_2019',
-		'選挙に行こう': 'GoVoteUpperHouseElection_2019',
 		'参院選': 'GoVoteUpperHouseElection_2019',
 		'参院選2019': 'GoVoteUpperHouseElection_2019',
 		'令和初の参院選': 'GoVoteUpperHouseElection_2019',
+		'東京都知事選挙': '2020_TokyoGubernatorialElection',
+		'東京都知事選': '2020_TokyoGubernatorialElection',
+		'都知事選': '2020_TokyoGubernatorialElection',
+		'選挙に行こう': '2020_TokyoGubernatorialElection',
 		// [7月17日は #世界絵文字デー](https://blog.twitter.com/ja_jp/topics/events/2019/World-Emoji-Day-2019.html)
 		'世界絵文字デー': 'WorldEmojiDay_2019',
 		'鳥取': 'WorldEmojiDay_2019',
@@ -691,12 +696,12 @@ function tweReplaceEmoji(el) {
 		'EMOJI': 'WorldEmojiDay_2019',
 		'WORLDEMOJIDAY': 'WorldEmojiDay_2019',
 		// [#Twitterトレンド大賞 presents #Twitter夏祭り 開催が決定！](https://blog.twitter.com/ja_jp/topics/events/2019/twitter-trend-award-natsumatsuri-2019.html)
-		'TWITTER夏祭り': 'TwitterTrendAward_Summer_Emoji',
+		'TWITTER夏祭り': 'SummerFestival_2020',
 		'TWITTERトレンド大賞': '2019TwitterTrendAward_Emoji_V2',
 		'ローソン屋台': 'TwitterTrendAward_Summer_Emoji',
 		'放置少女屋台': 'TwitterTrendAward_Summer_Emoji',
 		'サマーウォーズ屋台': 'TwitterTrendAward_Summer_Emoji',
-		// [#防災の日　もしもの際に備え、災害・防災に関する様々な取り組みを実施](https://blog.twitter.com/ja_jp/topics/events/2019/lifeline_2019.html)
+		// [#防災の日 もしもの際に備え、災害・防災に関する様々な取り組みを実施](https://blog.twitter.com/ja_jp/topics/events/2019/lifeline_2019.html)
 		'防災の日': 'Disaster_Prevention_Day_2019_Emoji_GIF_V3',
 		'防災': 'Disaster_Prevention_Day_2019_Emoji_GIF_V3',
 		'防災豆知識': 'Disaster_Prevention_Day_2019_Emoji_GIF_V3',
@@ -705,9 +710,17 @@ function tweReplaceEmoji(el) {
 		'防サイくん': 'Tokyo_Disaster_Prevention_Day_2019_Mascot_Emoji_GIF',
 		'今やろう': 'Tokyo_Disaster_Prevention_Day_2019_Mascot_Emoji_GIF',
 		// [Twitter、グローバルで自殺防止の取り組みを支援](https://blog.twitter.com/ja_jp/topics/company/2019/WSPD_2019.html)
-		'WORLDSUICIDEPREVENTIONDAY': 'World_Suicide_Prevention_Day_2019_Emoji',
-		'世界自殺予防デー': 'World_Suicide_Prevention_Day_2019_Emoji',
-		'自殺予防週間': 'World_Suicide_Prevention_Day_2019_Emoji',
+		'WORLDSUICIDEPREVENTIONDAY': 'WorldSuicidePreventionDay_2020',
+		'世界自殺予防デー': 'WorldSuicidePreventionDay_2020',
+		'自殺予防週間': 'WorldSuicidePreventionDay_2020',
+		'いのち支える': 'WorldSuicidePreventionDay_2020',
+		'相談してみよう': 'WorldSuicidePreventionDay_2020',
+		'弱音を吐こう': 'WorldSuicidePreventionDay_2020',
+		'WSPD': 'WorldSuicidePreventionDay_2020',
+		'WSPD2020': 'WorldSuicidePreventionDay_2020',
+		'SUICIDEPREVENTION': 'WorldSuicidePreventionDay_2020',
+		'10SEP': 'WorldSuicidePreventionDay_2020',
+		'LIGHTACANDLE': 'WorldSuicidePreventionDay_2020',
 		// ---- Rugby_World_Cup_2019_EMOJI_RWC2019 ----
 		'RWC2019': 'Rugby_World_Cup_2019_EMOJI_RWC2019',
 		'WEBBELLISCUP': 'Rugby_World_Cup_2019_EMOJI_WebbEllisCup',
@@ -867,13 +880,13 @@ function tweReplaceEmoji(el) {
 		'三ツ矢サイダー': 'AsahiMitsuyaJapan_2020',
 		'嵐と三ツ矢でカンパイ': 'AsahiMitsuyaJapan_2020',
 		'日本にはおいしいサイダーがある': 'AsahiMitsuyaJapan_2020',
-		// Nintendo_AnimalCrossing_2020_v2
-		'あつまれどうぶつの森': 'Nintendo_AnimalCrossing_2020_v2',
-		'どうぶつの森': 'Nintendo_AnimalCrossing_2020_v2',
-		'ACNH': 'Nintendo_AnimalCrossing_2020_v2',
-		'ANIMALCROSSING': 'Nintendo_AnimalCrossing_2020_v2',
-		'ANIMALCROSSINGNEWHORIZONS': 'Nintendo_AnimalCrossing_2020_v2',
-		'TOMNOOK': 'Nintendo_AnimalCrossing_2020_v2',
+		// AnimalCrossing_Nintendo_2020_NewArtwork
+		'あつまれどうぶつの森': 'AnimalCrossing_Nintendo_2020_NewArtwork',
+		'どうぶつの森': 'AnimalCrossing_Nintendo_2020_NewArtwork',
+		'ACNH': 'AnimalCrossing_Nintendo_2020_NewArtwork',
+		'ANIMALCROSSING': 'AnimalCrossing_Nintendo_2020_NewArtwork',
+		'ANIMALCROSSINGNEWHORIZONS': 'AnimalCrossing_Nintendo_2020_NewArtwork',
+		'TOMNOOK': 'AnimalCrossing_Nintendo_2020_NewArtwork',
 		// KIRINSoccerJapan_2020
 		'キリチャレの日': 'KIRINSoccerJapan_2020',
 		'届けてキリン': 'KIRINSoccerJapan_2020',
@@ -912,12 +925,20 @@ function tweReplaceEmoji(el) {
 		// ---- アースデー ----
 		'アースデー': 'EarthDay_2019_fixed',
 		'EARTHDAY': 'EarthDay_2019_fixed',
+		'VOICEFORTHEPLANET': 'EarthDay_2020_add',
 		'EARTHDAY2020': 'EarthDay_2020_add2',
 		'TWITTERFORGOOD': 'TwitterForGood_2020',
 		'TWITTERFORGOODDAY': 'TwitterForGood_2020',
 		'TFGDAY': 'TwitterForGood_2020',
 		'TFG': 'TwitterForGood_2020',
 		'FRIDAYFORGOOD': 'TwitterForGood_2020',
+		'環境の日': 'EarthDay_2020_ext_v2',
+		'CLIMATEACTION': 'EarthDay_2020_ext_v2',
+		'EARTHRISE': 'EarthDay_2020_ext_v2',
+		'VOTEEARTH': 'EarthDay_2020_ext_v2',
+		'世界環境デー': 'WorldEnvironmentDay_ForNature_2020',
+		'WORLDENVIRONMENTDAY': 'WorldEnvironmentDay_ForNature_2020',
+		'FORNATURE': 'WorldEnvironmentDay_ForNature_2020',
 		// https://twitter.com/TwitterJP/statuses/1256109065106669569
 		'世界報道自由デー': 'WorldPressFreedomDay_2020',
 		'記者に感謝': 'WorldPressFreedomDay_2020',
@@ -942,11 +963,60 @@ function tweReplaceEmoji(el) {
 		'LOVE放置少女': 'Houchishoujo_Q2_2020',
 		'いつもあなたのそばに〜放置少女': 'Houchishoujo_Q1_2020_V2',
 		'放置し過ぎないでね〜': 'Houchishoujo_Q1_2020_V2',
+		// https://twitter.com/TwitterJP/status/1260379335321518082
+		'ありがとう': 'Thankful_Grateful_2020',
+		'有り難う': 'Thankful_Grateful_2020',
+		'有難う': 'Thankful_Grateful_2020',
+		'ありがとうございます': 'Thankful_Grateful_2020',
+		'ありがと': 'Thankful_Grateful_2020',
+		'アリガト': 'Thankful_Grateful_2020',
+		'ありがたい': 'Thankful_Grateful_2020',
+		'有り難い': 'Thankful_Grateful_2020',
+		'有難い': 'Thankful_Grateful_2020',
+		'サンキュ': 'Thankful_Grateful_2020',
+		'さんきゅ': 'Thankful_Grateful_2020',
+		'感謝': 'Thankful_Grateful_2020',
+		'謝意': 'Thankful_Grateful_2020',
+		'THANKYOU': 'Thankful_Grateful_2020',
+		'THANKS': 'Thankful_Grateful_2020',
+		'THX': 'Thankful_Grateful_2020',
+		'THANKFUL': 'Thankful_Grateful_2020',
+		// ---- GLOBAL PRIDE ----
+		'東京レインボープライド': 'Pride_2020',
+		'TRP2020': 'Pride_2020',
+		'好きだから好き': 'Pride_2020',
+		'PRIDE': 'Pride_2020',
+		'PRIDE2020': 'Pride_2020',
+		'GLOBALPRIDE': 'Pride_2020',
+		'GLOBALPRIDE2020': 'Pride_2020',
+		'LOVEISLOVE': 'Pride_2020',
+		'常に誇りを': 'Pride_2020_AlwaysProud',
+		'ALWAYSPROUD': 'Pride_2020_AlwaysProud',
+		'PRIDEMONTH': 'Pride_2020_AlwaysProud',
+		// ---- 移民遺産月間 ----
+		'海外移住ストーリー': 'MyImmigrantStory_2020',
+		'国外移住ストーリー': 'MyImmigrantStory_2020',
+		'MYIMMIGRANTSTORY': 'MyImmigrantStory_2020',
+		// ---- PlayStationPS5 ----
+		'PLAYSTATION5': 'PlayStationPS5_2020',
+		'PS5': 'PlayStationPS5_2020',
+		'PS5REVEAL': 'PlayStationPS5_2020_add',
+		// ---- 世界難民の日 ----
+		'世界難民の日': 'WorldRefugees2020',
+		'WORLDREFUGEEDAY': 'WorldRefugees2020',
+		'REFUGEEDAY': 'WorldRefugees2020',
+		'WITHREFUGEES': 'WorldRefugees2020',
+		// ---- https://twitter.com/TwitterJP/statuses/1289367947610267649 ----
+		'花火': 'JP_FireworksDay_2020_BH',
+		'HANABI': 'JP_FireworksDay_2020_BH',
 		// ---- その他 ----
 		'MYTWITTERANNIVERSARY': 'MyTwitterAnniversary',
 		'LOVETWITTER': 'LoveTwitter',
+		'METOO': 'MeToo_v3',
+		'BLACKLIVESMATTER': 'BlackHistoryMonth',
 		'MSBUILD': 'MSBuild_2020',
 		'APPLEEVENT': 'Wasabi_Emoji_2019',
+		'WWDC20': 'WWDC_2020_V11',
 		'夏はサボテンダー': 'DFF_OperaOmnia_2019_Emoji',
 		'午後の紅茶': 'KIRIN_GT_2_Japan_2019_Emoji_V2',
 		'午後ティー': 'KIRIN_GT_2_Japan_2019_Emoji_V2',
@@ -961,10 +1031,7 @@ function tweReplaceEmoji(el) {
 
 	// status
 	Array.prototype.forEach.call(el.querySelectorAll('.status > .hashtag, .udesc > .hashtag'), function(elHashtag) {
-		var hashtag = elHashtag.innerHTML.match(hashtag_pattern);
-		if (!hashtag || hashtag.length < 2) return;
-
-		var index = hashtag[2].toUpperCase();
+		var index = elHashtag.innerHTML.replace(/^[#＃]/, '').toUpperCase();
 		if (countryFlags[index]) {
 			elHashtag.innerHTML += countryFlags[index].slice(2).map(function(s) {
 				return twemoji.convert.fromCodePoint(s);
@@ -978,6 +1045,14 @@ function tweReplaceEmoji(el) {
 	});
 
 	function getFlagImageHTML(iconName) {
+		iconName = (function(name) {
+			var pattern = /\[(\d+)-(\d+)\]/;
+			var range = name.match(pattern);
+			return range ? name.replace(pattern, (function(min, max) {
+				var l = parseInt(min, 10), h = parseInt(max, 10);
+				return parseInt(l + Math.random() * (h + 1 - l), 10);
+			})(range[1], range[2])) : name;
+		})(iconName);
 		return [
 			'<img class="emoji" draggable="false" alt="" src="//abs.twimg.com/hashflags/',
 			iconName,

@@ -2,9 +2,9 @@ langResources['Sound'] =	['音','声音'];
 langResources['on TL update'] =	['TL新着音','TL更新提醒'];
 langResources['on new Reply'] =	['@新着音','@更新提醒'];
 
-var twsd_html5 = twsd_mp3 = true;
+var twsd_html5 = true, twsd_mp3 = true;
 try {
-	twsd_audio = new Audio("");
+	var twsd_audio = new Audio("");
 	if (!twsd_audio.canPlayType("audio/mpeg")) twsd_mp3 = false;
 } catch(e) {
 	twsd_html5 = false;
@@ -17,7 +17,7 @@ function setSoundNames(names) {
 }
 
 registerPlugin({
-	miscTab: function(ele) {
+	miscTab: function() {
 		var e = document.createElement("div");
 		e.innerHTML = '<a href="javascript:var s = $(\'sound_pref\').style; s.display = s.display==\'block\'?\'none\':\'block\';void(0)"><b>▼'+_('Sound')+'</b></a>' +
 			'<form id="sound_pref" style="display:none" onSubmit="setSoundNames([$(\'sound0\').value,$(\'sound1\').value]); return false;">' +
@@ -40,8 +40,9 @@ registerPlugin({
 		var htmlToPlay = twsd_html5 ?
 			'<audio id="ply0-'+n+'" autobuffer="autobuffer" src="'+fname+'"></audio>' :
 			'<object type="audio/mpeg" data="'+fname+'" id="ply1-'+n+'" width="0" height="0" classid="clsid:6BF52A52-394A-11d3-B153-00C04F79FAA6"><param name="uiMode" value="none"><param name="url" value="'+fname+'"><param name="AutoStart" value="true"><object type="audio/mpeg" data="'+fname+'" id="ply2-'+n+'" width="0" height="0" classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B" autoplay="true"><param name="src" value="'+fname+'"><param name="autoplay" value="true"><embed src="'+fname+'" id="ply3-'+n+'" width="0" height="0" autostart="true" autoplay="true"></object></object>';
+		var target;
 		if (twsd_html5) {
-			var target = document.getElementById('ply0-'+n);
+			target = document.getElementById('ply0-'+n);
 			if (!target) {
 				document.getElementById('plysnd'+n).innerHTML = htmlToPlay;
 				target = document.getElementById('ply0-'+n);
@@ -49,7 +50,7 @@ registerPlugin({
 			target.play();
 			return;
 		}
-		var target = document.getElementById('ply1-'+n) || document.getElementById('ply2-'+n) || document.getElementById('ply3-'+n);
+		target = document.getElementById('ply1-'+n) || document.getElementById('ply2-'+n) || document.getElementById('ply3-'+n);
 		if (target && typeof(target.Play) == "function")
 			target.Play();
 		else if (target && typeof(target.controls) == "object")

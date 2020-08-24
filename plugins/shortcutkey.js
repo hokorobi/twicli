@@ -160,7 +160,7 @@ var shortcutkey_plugin = {
 						if (ele.previousSibling)
 							ele = ele.previousSibling;
 						else {
-							var pele = ele.parentNode.previousSibling;
+							pele = ele.parentNode.previousSibling;
 							ele = null;
 							while (!ele && pele) {
 								ele = pele.childNodes[0] && pele.childNodes[0].tw &&
@@ -241,7 +241,7 @@ var shortcutkey_plugin = {
 				return false;
 			case 186: // ; : リンクを必ず別ウィンドウで開く(Open links)
 				if (!selected) return true;
-				for (var i = 0; i < selected.childNodes.length; i++) {
+				for (i = 0; i < selected.childNodes.length; i++) {
 					var target = selected.childNodes[i]
 					if (target.id && target.id.substr(0,5) == 'text-') {
 						for (i = 0; i < target.childNodes.length; i++) {
@@ -256,8 +256,8 @@ var shortcutkey_plugin = {
 				return false;
 			case 79+lower: // o : リンクを開く(Open links)
 				if (!selected) return true;
-				for (var i = 0; i < selected.childNodes.length; i++) {
-					var target = selected.childNodes[i]
+				for (i = 0; i < selected.childNodes.length; i++) {
+					target = selected.childNodes[i]
 					if (target.id && target.id.substr(0,5) == 'text-') {
 						for (i = target.childNodes.length - 1; i >= 0; i--) {
 							var target2 = target.childNodes[i];
@@ -331,7 +331,7 @@ var shortcutkey_plugin = {
 			return;
 		}
 		this.inclemental_search_timer = null;
-		ele = (selected_menu.id == 'TL' ? $('tw') : selected_menu.id == 'reply' ? $('re') : $('tw2c'));
+		var ele = (selected_menu.id == 'TL' ? $('tw') : selected_menu.id == 'reply' ? $('re') : $('tw2c'));
 		if (ele.className.indexOf('filtered') < 0) ele.className += ' filtered';
 		for (var i = 0; i < ele.childNodes.length; i++) {
 			for (var j = 0; j < ele.childNodes[i].childNodes.length; j++) {
@@ -350,7 +350,7 @@ var shortcutkey_plugin = {
 		this.inclemental_search_timer = null;
 		if (this.filter_div) document.body.removeChild(this.filter_div);
 		this.filter_div = null;
-		ele = (selected_menu.id == 'TL' ? $('tw') : selected_menu.id == 'reply' ? $('re') : $('tw2c'));
+		var ele = (selected_menu.id == 'TL' ? $('tw') : selected_menu.id == 'reply' ? $('re') : $('tw2c'));
 		if (ele.className.indexOf('filtered') < 0) return;
 		ele.className = ele.className.replace(/ ?filtered/g, '');
 		for (var i = 0; i < ele.childNodes.length; i++) {
