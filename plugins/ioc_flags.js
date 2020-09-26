@@ -1009,13 +1009,16 @@ function tweReplaceEmoji(el) {
 		// ---- https://twitter.com/TwitterJP/statuses/1289367947610267649 ----
 		'花火': 'JP_FireworksDay_2020_BH',
 		'HANABI': 'JP_FireworksDay_2020_BH',
+		// ---- マスクをしよう ----
+		'マスクをしよう': 'WearAMask_2020_H2_2020',
+		'WEARAMASK': 'WearAMask_2020_H2_2020',
 		// ---- その他 ----
 		'MYTWITTERANNIVERSARY': 'MyTwitterAnniversary',
 		'LOVETWITTER': 'LoveTwitter',
 		'METOO': 'MeToo_v3',
 		'BLACKLIVESMATTER': 'BlackHistoryMonth',
 		'MSBUILD': 'MSBuild_2020',
-		'APPLEEVENT': 'Wasabi_Emoji_2019',
+		'APPLEEVENT': 'AppleEvent2020',
 		'WWDC20': 'WWDC_2020_V11',
 		'夏はサボテンダー': 'DFF_OperaOmnia_2019_Emoji',
 		'午後の紅茶': 'KIRIN_GT_2_Japan_2019_Emoji_V2',
