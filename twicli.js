@@ -1399,13 +1399,29 @@ function twUserInfo(user) {
 // ユーザ情報にフォロー関係を表示
 function twRelation(rel) {
 	var source = rel.relationship.source;
-	var elem = $("user_info");
+	var userInfo = $('user_info');
 	if (source.followed_by)
-		elem.innerHTML += '<a href="javascript:replyTo(\'' + rel.relationship.target.screen_name + '\',0,0,1)">[DM]</a>';
-	elem.innerHTML += '<button type="button" onClick="follow('+!source.following+')">' + _(source.following ? 'Remove $1' : 'Follow $1', last_user) + '</button>';
-	if (source.followed_by)
-		$("profile").innerHTML += "<br><span id=\"following_you\" class=\"following_you\">" + _('$1 is following you!', rel.relationship.target.screen_name)+'</span>';
-	callPlugins("newUserRelationship", elem, rel);
+		userInfo.appendChild((function(a) {
+			a.href = 'javascript:replyTo(\'' + rel.relationship.target.screen_name + '\',0,0,1)';
+			a.innerHTML = '[DM]';
+			return a;
+		})(document.createElement('a')));
+	userInfo.appendChild((function(button) {
+		button.type = 'button';
+		button.onclick = function() { follow(!source.following); };
+		button.innerHTML = _(source.following ? 'Remove $1' : 'Follow $1', last_user);
+		return button;
+	})(document.createElement('button')));
+	if (source.followed_by) {
+		var profile = $('profile');
+		profile.appendChild(document.createElement('br'));
+		profile.appendChild((function(span) {
+			span.id = span.className = 'following_you';
+			span.innerHTML = _('$1 is following you!', rel.relationship.target.screen_name);
+			return span;
+		})(document.createElement('span')));
+	}
+	callPlugins('newUserRelationship', userInfo, rel);
 }
 // ユーザ情報キャッシュ
 function fetchUserCache(list) {
@@ -1963,7 +1979,7 @@ function switchDirect() {
 }
 function switchMisc() {
 	switchTo("misc");
-	$("tw2h").innerHTML = '<br><a id="clientname" target="twitter" href="index.html"><b>twicli</b></a> : A browser-based Twitter client<br><small id="copyright">Copyright &copy; 2008-2019 NeoCat</small><hr class="spacer">' +
+	$("tw2h").innerHTML = '<br><a id="clientname" target="twitter" href="index.html"><b>twicli</b></a> : A browser-based Twitter client<br><small id="copyright">Copyright &copy; 2008-2021 NeoCat</small><hr class="spacer">' +
 	'<a href="javascript:showMediaOption()">' + _('Upload images') + '</a><br>' +
 					'<form id="switchuser" onSubmit="switchUser($(\'user_id\').value); return false;">'+
 					_('show user info')+' : @<input type="text" size="15" id="user_id" value="' + myname + '"><button type="submit" class="go"></button></form>' +
